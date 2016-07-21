@@ -58,7 +58,7 @@ def reboot_vm(args, si):
     print("its done.")
 
 
-def do_action(args, si):
+def do_vm_action(args, si):
     if args.action == "list":
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
@@ -99,6 +99,8 @@ def main():
         return -1
 
     atexit.register(Disconnect, si)
+
+    do_vm_action(args, si)
 
     return 0
 
