@@ -73,6 +73,8 @@ def do_vm_action(args, si):
         if not args.vmname:
             raise RuntimeError("VM name not specified")
         vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
+        if vm is None:
+            raise RuntimeError('VM %s not found' % args.vmname)
         vm_helper.print_vm_info(vm)
 
     elif args.action == "reboot":
