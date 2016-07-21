@@ -31,8 +31,8 @@ def print_vm_info(vm, depth=1, max_depth=10):
     if hasattr(vm, 'childEntity'):
         if depth > max_depth:
             return
-        vmList = vm.childEntity
-        for c in vmList:
+        vm_list = vm.childEntity
+        for c in vm_list:
             print_vm_info(c, depth + 1)
         return
 
@@ -41,6 +41,9 @@ def print_vm_info(vm, depth=1, max_depth=10):
     print("Path       : %s" % summary.config.vmPathName)
     print("Guest      : %s" % summary.config.guestFullName)
     print("UUID       : %s" % summary.config.instanceUuid)
+    print("CPU #      : %d" % summary.config.numCpu)
+    print("RAM        : %dMB" % summary.config.memorySizeMB)
+
     annotation = summary.config.annotation
     if annotation:
         print ("Annotation : %s" % annotation)
