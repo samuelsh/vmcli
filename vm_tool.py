@@ -70,7 +70,7 @@ def do_vm_action(args, si):
                     vm_helper.print_vm_info(vm)
 
     elif args.action == "info":
-        if not args.vname:
+        if not args.vmname:
             raise RuntimeError("VM name not specified")
         vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
         vm_helper.print_vm_info(vm)
