@@ -37,18 +37,18 @@ def print_vm_info(vm, depth=1, max_depth=10):
         return
 
     summary = vm.summary
-    print("Name       : ", summary.config.name)
-    print("Path       : ", summary.config.vmPathName)
-    print("Guest      : ", summary.config.guestFullName)
-    print("UUID       : ", summary.config.instanceUuid)
+    print("Name       : %s" % summary.config.name)
+    print("Path       : %s" % summary.config.vmPathName)
+    print("Guest      : %s" % summary.config.guestFullName)
+    print("UUID       : %s" % summary.config.instanceUuid)
     annotation = summary.config.annotation
     if annotation:
-        print ("Annotation : ", annotation)
-    print ("State      : ", summary.runtime.powerState)
+        print ("Annotation : %s" % annotation)
+    print ("State      : %s" % summary.runtime.powerState)
     if summary.guest is not None:
         ip = summary.guest.ipAddress
         if ip:
-            print ("IP         : ", ip)
+            print ("IP         : %s" % ip)
     if summary.runtime.question is not None:
-        print ("Question  : ", summary.runtime.question.text)
+        print ("Question  : %s" % summary.runtime.question.text)
     print ("")
