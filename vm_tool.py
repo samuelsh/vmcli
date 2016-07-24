@@ -113,7 +113,7 @@ def poweron_vm(args, si):
         return 1
 
     print("Found VirtualMachine: %s Name: %s" % (vm, vm.name))
-
+    print("VM State: %s" % vm.runtime.powerState)
     if vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOn:
         # using time.sleep we just wait until the power off action
         # is complete. Nothing fancy here.
