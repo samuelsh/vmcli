@@ -112,6 +112,14 @@ def poweron_vm(args, si):
         print("could not find a virtual machine with the name %s" % args.vmname)
         return 1
 
+    if args.action == "poweroff" and vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOff:
+        print("VM %s is already Powered Off.")
+        return 0
+
+    if args.action == "poweron" and vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOn:
+        print("VM %s is already Powered On.")
+        return 0
+
     print("Found VirtualMachine: %s Name: %s" % (vm, vm.name))
     print("VM State: %s" % vm.runtime.powerState)
     if vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOn:
@@ -130,9 +138,9 @@ def poweron_vm(args, si):
     # poll our task repeatedly and also check for any run-time issues. This
     # code deals with a common problem, what to do if a VM question pops up
     # and how do you handle it in the API?
-    print("powering on VM %s" % vm.name)
     if vm.runtime.powerState != vim.VirtualMachinePowerState.poweredOn:
         # now we get to work... calling the vSphere API generates a task...
+        print("powering on VM %s" % vm.name)
         task = vm.PowerOn()
         answers = {}
         while task.info.state not in [vim.TaskInfo.State.success,
@@ -157,6 +165,7 @@ def poweron_vm(args, si):
                 print(fault_msg.key)
                 print(fault_msg.message)
             return 1
+    return 0
 
 
 def do_vm_action(args, si):
