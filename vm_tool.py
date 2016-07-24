@@ -113,11 +113,11 @@ def poweron_vm(args, si):
         return 1
 
     if args.action == "poweroff" and vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOff:
-        print("VM %s is already Powered Off.")
+        print("VM %s is already Powered Off." % vm.name)
         return 0
 
     if args.action == "poweron" and vm.runtime.powerState == vim.VirtualMachinePowerState.poweredOn:
-        print("VM %s is already Powered On.")
+        print("VM %s is already Powered On." % vm.name)
         return 0
 
     print("Found VirtualMachine: %s Name: %s" % (vm, vm.name))
