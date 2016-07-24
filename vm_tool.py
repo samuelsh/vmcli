@@ -192,6 +192,9 @@ def do_vm_action(args, si):
     elif args.action == "reboot":
         reboot_vm(args, si)
 
+    elif args.action == "poweroff" or args.action == "poweron":
+        poweron_vm(args, si)
+
 
 def main():
     """
