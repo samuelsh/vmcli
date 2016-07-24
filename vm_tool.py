@@ -112,7 +112,7 @@ def poweron_vm(args, si):
     while entity_stack:
         entity = entity_stack.pop()
 
-        if entity.name == args.name:
+        if entity.name == args.vmname:
             vm = entity
             del entity_stack[0:len(entity_stack)]
         elif hasattr(entity, 'childEntity'):
