@@ -107,21 +107,9 @@ def reboot_vm(args, si):
 
 def poweron_vm(args, si):
     # search the whole inventory tree recursively... a brutish but effective tactic
-    vm = None
-    entity_stack = si.content.rootFolder.childEntity
-    while entity_stack:
-        entity = entity_stack.pop()
-
-        if entity.name == args.vmname:
-            vm = entity
-            del entity_stack[0:len(entity_stack)]
-        elif hasattr(entity, 'childEntity'):
-            entity_stack.extend(entity.childEntity)
-        elif isinstance(entity, vim.Datacenter):
-            entity_stack.append(entity.vmFolder)
-
+    vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
     if not isinstance(vm, vim.VirtualMachine):
-        print("could not find a virtual machine with the name %s" % args.name)
+        print("could not find a virtual machine with the name %s" % args.vmname)
         return 1
 
     print("Found VirtualMachine: %s Name: %s" % (vm, vm.name))
