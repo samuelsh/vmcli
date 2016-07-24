@@ -123,6 +123,7 @@ def poweron_vm(args, si):
                                       vim.TaskInfo.State.error]:
             time.sleep(1)
         print("power is off.")
+        return 0
 
     # Sometimes we don't want a task to block execution completely
     # we may want to execute or handle concurrent events. In that case we can
