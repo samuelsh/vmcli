@@ -88,8 +88,9 @@ class VmUtils(object):
             if hasattr(child, 'vmFolder'):
                 print("---------------- DataCenter: %s ------------------" % child.name)
                 datacenter = child
-                vm_folder = datacenter.hostFolder
-                print(vm_folder.name)
+                vm_folders = datacenter.hostFolder
+                for folder in vm_folders:
+                    print(folder.name)
 
 
     @staticmethod
