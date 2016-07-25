@@ -106,10 +106,9 @@ class VmUtils(object):
                             if "ComputeResource" in str(type(res)):
                                 print("%s" % res.name)
                                 for vm in res.resourcePool.vm:
-                                    if hasattr(vm, 'config'):
-                                        vm_helper.print_vm_info(vm)
-                                    else:
-                                        print("%s" % vm.name)
+                                    vm_helper.print_vm_info(vm)
+                            else:
+                                print("%s" % vm.name)
 
 
     @staticmethod
