@@ -103,7 +103,7 @@ class VmUtils(object):
                     if folder.name == args.fname:
                         resources = folder.childEntity
                         for res in resources:
-                            if "ComputeResource" in str(type(resources)):
+                            if "ComputeResource" in str(type(res)):
                                 print("%s" % res.name)
                                 for vm in res.resourcePool.vm:
                                     if hasattr(vm, 'config'):
