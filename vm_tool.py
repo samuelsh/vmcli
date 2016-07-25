@@ -25,7 +25,6 @@ import atexit
 import getpass
 
 from pyVim.connect import SmartConnect, Disconnect
-from tools import vm as vm_helper
 from vmutils import VmUtils
 
 

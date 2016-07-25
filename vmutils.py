@@ -6,7 +6,7 @@ import textwrap
 
 import time
 
-from tools import cli, tasks, vm as vm_helper
+from tools import tasks, vm as vm_helper
 from pyVmomi import vim
 
 
@@ -71,6 +71,7 @@ class VmUtils(object):
                 datacenter = child
                 vm_folder = datacenter.vmFolder
                 vm_list = vm_folder.childEntity
+                print("---------------- Folder: %s ------------------" % vm_folder.name)
                 for vm in vm_list:
                     vm_helper.print_vm_info(vm)
 
