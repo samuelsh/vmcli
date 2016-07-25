@@ -44,7 +44,8 @@ def get_args():
     parser.add_argument('-p', '--password', required=False, action='store',
                         help='Password to use when connecting to host')
     parser.add_argument('--action', choices=['list', 'poweron', 'poweroff', 'reboot', 'info', 'folder', 'listfolders'])
-    parser.add_argument('-n', '--vmname', type=str, help="Some action are require name of specific VM.")
+    parser.add_argument('-n', '--vmname', type=str, help="")
+    parser.add_argument('-f', '--fname', type=str, help="")
     args = parser.parse_args()
     return args
 
@@ -63,7 +64,11 @@ def do_vm_action(args, si):
     elif args.action == "folder":
         VmUtils.get_vm_folder(args, si)
     elif args.action == "listfolders":
-        VmUtils.get_all_folders(args, si)
+        VmUtils.get_all_folders(si)
+    elif args.action == "byfolder":
+        if not args.fname:
+            raise RuntimeError("VM folder not specified")
+        VmUtils.get_vms_by_folder(args, si)
 
 
 def main():

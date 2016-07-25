@@ -69,7 +69,7 @@ class VmUtils(object):
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):
                 datacenter = child
-                vm_folder = datacenter.vmFolder
+                vm_folder = datacenter.hostFolder
                 vm_list = vm_folder.childEntity
                 for vm in vm_list:
                     vm_helper.print_vm_info(vm)
@@ -82,7 +82,7 @@ class VmUtils(object):
         print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
-    def get_all_folders(args, si):
+    def get_all_folders(si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):
@@ -92,6 +92,23 @@ class VmUtils(object):
                 for folder in vm_folders.childEntity:
                     print(folder.name)
 
+    @staticmethod
+    def get_vms_by_folder(args, si):
+        content = si.RetrieveContent()
+        for child in content.rootFolder.childEntity:
+            if hasattr(child, 'vmFolder'):
+                datacenter = child
+                vm_folders = datacenter.hostFolder
+                for folder in vm_folders.childEntity:
+                    if folder.name == args.fname:
+                        vm_list = folder.childEntity
+                        for vm in vm_list:
+                            vm_helper.print_vm_info(vm)
+
+
+    @staticmethod
+    def print_tree(si):
+        pass
 
     @staticmethod
     def reboot_vm(args, si):
