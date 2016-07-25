@@ -43,7 +43,7 @@ def get_args():
                         help='User name to use when connecting to host')
     parser.add_argument('-p', '--password', required=False, action='store',
                         help='Password to use when connecting to host')
-    parser.add_argument('--action', choices=['list', 'poweron', 'poweroff', 'reboot', 'info'])
+    parser.add_argument('--action', choices=['list', 'poweron', 'poweroff', 'reboot', 'info', 'folder'])
     parser.add_argument('-n', '--vmname', type=str, help="Some action are require name of specific VM.")
     args = parser.parse_args()
     return args
@@ -60,6 +60,8 @@ def do_vm_action(args, si):
         VmUtils.reboot_vm(args, si)
     elif args.action == "poweroff" or args.action == "poweron":
         VmUtils.poweron_vm(args, si)
+    elif args.action == "folder":
+        VmUtils.get_vm_folder(args, si)
 
 
 def main():
