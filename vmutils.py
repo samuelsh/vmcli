@@ -106,7 +106,7 @@ class VmUtils(object):
                             if hasattr(vm, 'config'):
                                 vm_helper.print_vm_info(vm)
                             else:
-                                print("%s" % type(vm))
+                                print("%s" % vm.name)
 
 
     @staticmethod
