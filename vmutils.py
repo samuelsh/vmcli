@@ -101,12 +101,15 @@ class VmUtils(object):
                 vm_folders = datacenter.hostFolder
                 for folder in vm_folders.childEntity:
                     if folder.name == args.fname:
-                        vm_list = folder.childEntity
-                        for vm in vm_list:
-                            if hasattr(vm, 'config'):
-                                vm_helper.print_vm_info(vm)
-                            else:
-                                print("%s" % vm.name)
+                        resources = folder.childEntity
+                        if "ComputeResource" in type(resources):
+                            for res in resources:
+                                print("%s" % res.name)
+                                for vm in res.resourcePool.vm:
+                                    if hasattr(vm, 'config'):
+                                        vm_helper.print_vm_info(vm)
+                                    else:
+                                        print("%s" % vm.name)
 
 
     @staticmethod
