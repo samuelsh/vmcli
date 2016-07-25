@@ -89,9 +89,7 @@ class VmUtils(object):
                 print("---------------- DataCenter: %s ------------------" % child.name)
                 datacenter = child
                 vm_folder = datacenter.hostFolder
-                vm_list = vm_folder.childEntity
-                for vm in vm_list:
-                    vm_helper.print_vm_info(vm)
+                print(vm_folder.name)
 
 
     @staticmethod
