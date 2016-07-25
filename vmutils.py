@@ -71,7 +71,6 @@ class VmUtils(object):
                 datacenter = child
                 vm_folder = datacenter.vmFolder
                 vm_list = vm_folder.childEntity
-                print("---------------- Folder: %s ------------------" % vm_list[0].parent.name)
                 for vm in vm_list:
                     vm_helper.print_vm_info(vm)
 
@@ -81,6 +80,12 @@ class VmUtils(object):
         if vm is None:
             raise RuntimeError('VM %s not found' % args.vmname)
         print("Parent Folder: %s" % vm.parent.name)
+
+    @staticmethod
+    def get_all_folders(args, si):
+        content = si.RetrieveContent()
+        for child in content.rootFolder.childEntity("vim.Folder"):
+            print("---------------- Folder: %s ------------------" % child.name)
 
     @staticmethod
     def reboot_vm(args, si):
