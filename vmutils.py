@@ -96,20 +96,16 @@ class VmUtils(object):
     def get_vms_by_folder(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
-            if hasattr(child, 'vmFolder'):
+            if hasattr(child, 'vmFolder'):  # is object a datacenter ?
                 datacenter = child
                 vm_folders = datacenter.hostFolder
                 for folder in vm_folders.childEntity:
                     if folder.name == args.fname:
                         resources = folder.childEntity
                         for res in resources:
-                            if "ComputeResource" in str(type(res)):
-                                print("%s" % res.name)
-                                for vm in res.resourcePool.vm:
-                                    vm_helper.print_vm_info(vm)
-                            else:
-                                print("%s" % vm.name)
-
+                            print("Computer Resource: %s" % res.name)
+                            for vm in res.resourcePool.vm:
+                                vm_helper.print_vm_info(vm)
 
     @staticmethod
     def print_tree(si):
