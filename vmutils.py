@@ -84,7 +84,7 @@ class VmUtils(object):
     @staticmethod
     def get_all_folders(args, si):
         content = si.RetrieveContent()
-        for child in content.rootFolder.childEntity(vim.Folder):
+        for child in content.rootFolder.childEntity:
             print("---------------- Folder: %s ------------------" % child.name)
 
     @staticmethod
