@@ -85,7 +85,14 @@ class VmUtils(object):
     def get_all_folders(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
-            print("---------------- Folder: %s ------------------" % child.name)
+            if hasattr(child, 'vmFolder'):
+                print("---------------- DataCenter: %s ------------------" % child.name)
+                datacenter = child
+                vm_folder = datacenter.hostFolder
+                vm_list = vm_folder.childEntity
+                for vm in vm_list:
+                    vm_helper.print_vm_info(vm)
+
 
     @staticmethod
     def reboot_vm(args, si):
