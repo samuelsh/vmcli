@@ -80,7 +80,7 @@ class VmUtils(object):
         vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
         if vm is None:
             raise RuntimeError('VM %s not found' % args.vmname)
-        print("Parent Folder: %s" % vm.get_esx_host())
+        print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
     def reboot_vm(args, si):
