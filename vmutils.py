@@ -103,7 +103,10 @@ class VmUtils(object):
                     if folder.name == args.fname:
                         vm_list = folder.childEntity
                         for vm in vm_list:
-                            vm_helper.print_vm_info(vm)
+                            if hasattr(vm, 'config'):
+                                vm_helper.print_vm_info(vm)
+                            else:
+                                print("%s" % type(vm))
 
 
     @staticmethod
