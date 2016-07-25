@@ -102,7 +102,7 @@ class VmUtils(object):
                 for folder in vm_folders.childEntity:
                     if folder.name == args.fname:
                         resources = folder.childEntity
-                        if "ComputeResource" in type(resources):
+                        if "ComputeResource" in str(type(resources)):
                             for res in resources:
                                 print("%s" % res.name)
                                 for vm in res.resourcePool.vm:
