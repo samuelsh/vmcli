@@ -89,7 +89,7 @@ class VmUtils(object):
                 print("---------------- DataCenter: %s ------------------" % child.name)
                 datacenter = child
                 vm_folders = datacenter.hostFolder
-                for folder in vm_folders:
+                for folder in vm_folders.childEntity:
                     print(folder.name)
 
 
