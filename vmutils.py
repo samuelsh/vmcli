@@ -103,9 +103,11 @@ class VmUtils(object):
                     if folder.name == args.fname:
                         resources = folder.childEntity
                         for res in resources:
-                            print("Computer Resource: %s" % res.name)
+                            print("Compute Resource: %s" % res.name)
                             for vm in res.resourcePool.vm:
                                 vm_helper.print_vm_info(vm)
+            else:
+                print("Folder %s not found" % args.fname)
 
     @staticmethod
     def print_tree(si):
