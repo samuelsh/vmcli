@@ -90,7 +90,7 @@ class VmUtils(object):
                 datacenter = child
                 vm_folders = datacenter.hostFolder
                 for folder in vm_folders.childEntity:
-                    print(folder.name)
+                    print("%s %s" % (folder.name, type(folder)))
 
     @staticmethod
     def get_vms_by_folder(args, si):
