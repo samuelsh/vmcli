@@ -21,13 +21,13 @@ class DataBase:
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id                  INTEGER PRIMARY KEY,
+                id                  INTEGER PRIMARY KEY NOT NULL,
                 name                TEXT
                 )''' % VM_HOST_FOLDER_TABLE_NAME)
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id              INTEGER PRIMARY KEY,
+                id              INTEGER PRIMARY KEY NOT NULL,
                 name            TEXT,
                 folder_name     TEXT,
                 FOREIGN KEY (name) REFERENCES %s (folder_name)
@@ -35,7 +35,7 @@ class DataBase:
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id              INTEGER PRIMARY KEY,
+                id              INTEGER PRIMARY KEY NOT NULL,
                 folder_name     TEXT,
                 cmp_res_name    TEXT,
                 name            TEXT,
