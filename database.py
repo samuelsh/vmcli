@@ -21,13 +21,13 @@ class DataBase:
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id                  INTEGER PRIMARY KEY NOT NULL,
+                id                  INTEGER PRIMARY KEY,
                 name                TEXT
                 )''' % VM_HOST_FOLDER_TABLE_NAME)
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id              INTEGER PRIMARY KEY NOT NULL,
+                id              INTEGER PRIMARY KEY,
                 name            TEXT,
                 folder_name     TEXT,
                 FOREIGN KEY (name) REFERENCES %s (folder_name)
@@ -35,7 +35,7 @@ class DataBase:
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
-                id              INTEGER PRIMARY KEY NOT NULL,
+                id              INTEGER PRIMARY KEY,
                 folder_name     TEXT,
                 cmp_res_name    TEXT,
                 name            TEXT,
@@ -52,8 +52,8 @@ class DataBase:
     def insert_host_folder_object(self, host_folder):
         """:type host_folder: VMHostFolder"""
         try:
-            self._cursor.execute('insert into %s values (?)' % VM_HOST_FOLDER_TABLE_NAME,
-                                 (host_folder.name,))
+            self._cursor.execute('insert into %s values (?,?)' % VM_HOST_FOLDER_TABLE_NAME,
+                                 (None, host_folder.name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_HOST_FOLDER_TABLE_NAME, (host_folder.name,),
@@ -63,8 +63,8 @@ class DataBase:
     def insert_compute_resource_object(self, compute_resource):
         """:type compute_resource: ComputeResource"""
         try:
-            self._cursor.execute('insert into %s values (?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
-                                 (compute_resource.name, compute_resource.folder_name,))
+            self._cursor.execute('insert into %s values (?,?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
+                                 (None, compute_resource.name, compute_resource.folder_name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_COMPUTE_RESOURCE_TABLE_NAME,
@@ -75,9 +75,9 @@ class DataBase:
     def insert_vms_object(self, virtual_machine):
         """:type virtual_machine: VirtualMachine"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
+            self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
                                  (
-                                     virtual_machine.foder_name, virtual_machine.cmp_res_name,
+                                     None, virtual_machine.foder_name, virtual_machine.cmp_res_name,
                                      virtual_machine.name,
                                      virtual_machine.path, virtual_machine.guest,
                                      virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
