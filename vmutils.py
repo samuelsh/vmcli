@@ -75,7 +75,7 @@ class VmUtils(object):
                     vm_helper.print_vm_info(vm)
 
     @staticmethod
-    def get_vm_folder(args, si):
+    def print_vm_folder(args, si):
         vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
         if vm is None:
             raise RuntimeError('VM %s not found' % args.vmname)

@@ -79,14 +79,15 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
     elif args.action == "poweroff" or args.action == "poweron":
         VmUtils.poweron_vm(args, si)
     elif args.action == "folder":
-        VmUtils.get_vm_folder(args, si)
+        VmUtils.print_vm_folder(args, si)
     elif args.action == "listfolders":
-        VmUtils.get_all_folders(si)
+        VmUtils.print_all_folders(si)
     elif args.action == "byfolder":
         if not args.fname:
             raise RuntimeError("VM folder not specified")
         VmUtils.print_vms_by_folder(args, si)
-    elif args.dump2db:
+
+    if args.dump2db:
         if db is None:
             raise RuntimeError("DB isn't initialised")
         logger.info("Scanning VM folders. Can take some time....")
