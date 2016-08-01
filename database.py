@@ -52,8 +52,8 @@ class DataBase:
     def insert_host_folder_object(self, host_folder):
         """:type host_folder: VMHostFolder"""
         try:
-            self._cursor.execute('insert into %s values (?,?)' % VM_HOST_FOLDER_TABLE_NAME,
-                                 ('NULL', host_folder.name,))
+            self._cursor.execute('insert into %s values (?)' % VM_HOST_FOLDER_TABLE_NAME,
+                                 (host_folder.name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_HOST_FOLDER_TABLE_NAME, (host_folder.name,),
@@ -63,21 +63,21 @@ class DataBase:
     def insert_compute_resource_object(self, compute_resource):
         """:type compute_resource: ComputeResource"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
-                                 ('NULL', compute_resource.name, compute_resource.folder_name,))
+            self._cursor.execute('insert into %s values (?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
+                                 (compute_resource.name, compute_resource.folder_name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_COMPUTE_RESOURCE_TABLE_NAME,
-                (compute_resource.id, compute_resource.name, compute_resource.folder_name),
+                (compute_resource.name, compute_resource.folder_name),
                 str(err)))
             raise err
 
     def insert_vms_object(self, virtual_machine):
         """:type virtual_machine: VirtualMachine"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
+            self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
                                  (
-                                     'NULL', virtual_machine.foder_name, virtual_machine.cmp_res_name,
+                                     virtual_machine.foder_name, virtual_machine.cmp_res_name,
                                      virtual_machine.name,
                                      virtual_machine.path, virtual_machine.guest,
                                      virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
