@@ -82,7 +82,7 @@ class VmUtils(object):
         print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
-    def get_all_folders(si):
+    def print_all_folders(si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):
@@ -93,7 +93,69 @@ class VmUtils(object):
                     print("%s %s" % (folder.name, folder.configStatus))
 
     @staticmethod
-    def get_vms_by_folder(args, si):
+    def get_all_folders(si):
+        flist = []
+        content = si.RetrieveContent()
+        for child in content.rootFolder.childEntity:
+            if hasattr(child, 'vmFolder'):
+                datacenter = child
+                vm_folders = datacenter.hostFolder
+                if not vm_folders:
+                    return None
+                for folder in vm_folders.childEntity:
+                    flist.append(folder.name)
+            else:
+                return None
+        return flist
+
+    @staticmethod
+    def get_compute_resources_by_folder(folder_name, si):
+        content = si.RetrieveContent()
+        cres_list = []
+        for child in content.rootFolder.childEntity:
+            if hasattr(child, 'vmFolder'):  # is object a datacenter ?
+                datacenter = child
+                vm_folders = datacenter.hostFolder
+                if not vm_folders:
+                    return None
+                for folder in vm_folders.childEntity:
+                    if folder.name == folder_name:
+                        resources = folder.childEntity
+                        for res in resources:
+                            cres_list.append(res.name)
+            else:
+                return None
+        return cres_list
+
+    @staticmethod
+    def get_vms_by_compute_resource(folder_name, cmp_res_name, si):
+        content = si.RetrieveContent()
+        vms_list = []
+        for child in content.rootFolder.childEntity:
+            if hasattr(child, 'vmFolder'):  # is object a datacenter ?
+                datacenter = child
+                vm_folders = datacenter.hostFolder
+                if not vm_folders:
+                    return None
+                for folder in vm_folders.childEntity:
+                    if folder.name == folder_name:
+                        resources = folder.childEntity
+                        if not resources:
+                            return None
+                        for res in resources:
+                            if res.name == cmp_res_name:
+                                for vm in res.resourcePool.vm:
+                                    summary = vm.summary
+                                    vms_list.append(
+                                        (summary.config.name, summary.config.vmPathName, summary.config.guestFullName,
+                                         summary.config.instanceUuid, summary.config.numCpu, summary.config.memorySizeMB,
+                                         summary.runtime.powerState, summary.guest.ipAddress))
+            else:
+                return None
+        return vms_list
+
+    @staticmethod
+    def print_vms_by_folder(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):  # is object a datacenter ?
@@ -111,6 +173,10 @@ class VmUtils(object):
 
     @staticmethod
     def print_tree(si):
+        pass
+
+    @staticmethod
+    def dump2db(args, si, db):
         pass
 
     @staticmethod

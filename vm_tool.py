@@ -25,6 +25,10 @@ import atexit
 import getpass
 
 from pyVim.connect import SmartConnect, Disconnect
+
+from database import DataBase
+from logger import Logger
+from vmhostfolder import VmHostFolder
 from vmutils import VmUtils
 
 
@@ -47,11 +51,23 @@ def get_args():
                         choices=['list', 'poweron', 'poweroff', 'reboot', 'info', 'folder', 'listfolders', 'byfolder'])
     parser.add_argument('-n', '--vmname', type=str, help="")
     parser.add_argument('-f', '--fname', type=str, help="")
+    parser.add_argument('--dump2db', action='store_true')
     args = parser.parse_args()
     return args
 
 
-def do_vm_action(args, si):
+def do_vm_action(logger, args, vm_folders, si, db=None):
+    """
+    :param logger
+    :type logger: Logger
+    :param args:
+    :param vm_folders:
+    :type vm_folders: VmHostFolder[]
+    :param si:
+    :param db:
+    :type db: DataBase
+    :return:
+    """
     if args.action == "list":
         VmUtils.list_all_vms(si)
     elif args.action == "info":
@@ -69,14 +85,33 @@ def do_vm_action(args, si):
     elif args.action == "byfolder":
         if not args.fname:
             raise RuntimeError("VM folder not specified")
-        VmUtils.get_vms_by_folder(args, si)
+        VmUtils.print_vms_by_folder(args, si)
+    elif args.dump2db:
+        if db is None:
+            raise RuntimeError("DB isn't initialised")
+        for folder in vm_folders:
+            folder.insert(db)
+            for cmp_resource in folder.compute_resources:
+                cmp_resource.insert(db)
+                for vm in cmp_resource.virtual_machines:
+                    vm.insert(db)
+        logger.info("Done dumping to DB")
+
+
 
 
 def main():
     """
    """
-
+    data_base = None
+    vm_folders = []
     args = get_args()
+    logger = Logger().logger
+    logger.debug("Logger Initialized %s" % logger)
+    if args.dump2db:
+        data_base = DataBase(logger)
+        logger.info("SQLite DB initialized %s" % data_base)
+
     if args.password:
         password = args.password
     else:
@@ -87,13 +122,17 @@ def main():
                       user=args.user,
                       pwd=password)
     if not si:
-        print("Could not connect to the specified host using specified "
-              "username and password")
+        logger.error("Could not connect to the specified host using specified "
+                     "username and password")
         return -1
 
     atexit.register(Disconnect, si)
 
-    do_vm_action(args, si)
+    logger.info("Scanning VM folders. Can take some time....")
+    for folder in VmUtils.get_all_folders(si):
+        vm_folders.append(VmHostFolder(folder, si))
+
+    do_vm_action(args, vm_folders, si, data_base)
 
     return 0
 

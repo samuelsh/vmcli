@@ -29,12 +29,15 @@ class DataBase:
              (
                 id              INTEGER PRIMARY KEY,
                 name            TEXT,
-                FOREIGN KEY (id) REFERENCES %s (id)
+                folder_name     TEXT,
+                FOREIGN KEY (name) REFERENCES %s (folder_name)
                 )''' % (VM_COMPUTE_RESOURCE_TABLE_NAME, VM_HOST_FOLDER_TABLE_NAME))
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
                 id              INTEGER PRIMARY KEY,
+                folder_name     TEXT,
+                cmp_res_name    TEXT,
                 name            TEXT,
                 path            TEXT,
                 guest           TEXT,
@@ -43,60 +46,54 @@ class DataBase:
                 ram             text,
                 state           text,
                 ip              text,
-                FOREIGN KEY(id) REFERENCES %s(id)
+                FOREIGN KEY(cmp_res_name) REFERENCES %s(name)
                 )''' % (VMS_TABLE_NAME, VM_COMPUTE_RESOURCE_TABLE_NAME))
 
-    def _insert_rack_folder_object(self, file_object):
-        """:type file_object: DedupedFluidFSFile"""
+    def insert_host_folder_object(self, host_folder):
+        """:type host_folder: VMHostFolder"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?,?,?)' % VM_HOST_FOLDER_TABLE_NAME,
-                                 (file_object.dsid, file_object.timestamp,
-                                  file_object.get_file_path_cluster(),
-                                  file_object.file_size, file_object.fsid,))
+            self._cursor.execute('insert into %s values (?,?)' % VM_HOST_FOLDER_TABLE_NAME,
+                                 ('NULL', host_folder.name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
-                VM_HOST_FOLDER_TABLE_NAME, (file_object.dsid, file_object.timestamp,
-                                         file_object.get_file_path_cluster(),
-                                         file_object.file_size, file_object.fsid),
+                VM_HOST_FOLDER_TABLE_NAME, (host_folder.id, host_folder),
                 str(err)))
             raise err
 
-    def _insert_compute_resource_object(self, block_map_object):
-        """:type block_map_object: OSDBlockMap"""
+    def insert_compute_resource_object(self, compute_resource):
+        """:type compute_resource: ComputeResource"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
-                                 (block_map_object.bm_scid, block_map_object.bm_node, block_map_object.dsid,))
+            self._cursor.execute('insert into %s values (?,?,?,?)' % VM_COMPUTE_RESOURCE_TABLE_NAME,
+                                 ('NULL', compute_resource.name, compute_resource.folder_name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_COMPUTE_RESOURCE_TABLE_NAME,
-                (block_map_object.bm_scid, block_map_object.bm_node, block_map_object.dsid),
+                (compute_resource.id, compute_resource.name, compute_resource.folder_name),
                 str(err)))
             raise err
 
-    def _insert_vms_object(self, data_store_object):
-        """:type data_store_object: OSDDataStore"""
+    def insert_vms_object(self, virtual_machine):
+        """:type virtual_machine: VirtualMachine"""
         try:
-            self._cursor.execute('insert into %s values (?,?,?)' % VMS_TABLE_NAME,
-                                 (data_store_object.ds_scid, data_store_object.ds_node, data_store_object.bm_scid,))
+            self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
+                                 (
+                                     'NULL', virtual_machine.foder_name, virtual_machine.cmp_res_name,
+                                     virtual_machine.name,
+                                     virtual_machine.path, virtual_machine.guest,
+                                     virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
+                                     virtual_machine.state, virtual_machine.ip,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VMS_TABLE_NAME,
-                (data_store_object.ds_scid, data_store_object.ds_node, data_store_object.bm_scid),
+                (virtual_machine.foder_name, virtual_machine.cmp_res_name, virtual_machine.name, virtual_machine.path,
+                 virtual_machine.guest,
+                 virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
+                 virtual_machine.state, virtual_machine.ip),
                 str(err)))
             raise err
 
-    def insert(self, fluidfs_object):
-        self._logger.info("inserting %s object", fluidfs_object.__class__.__name__)
-        if isinstance(fluidfs_object, DedupedFluidFSFile):
-            self._insert_file_object(fluidfs_object)
-        elif isinstance(fluidfs_object, OSDBlockMap):
-            self._insert_block_map_object(fluidfs_object)
-        elif isinstance(fluidfs_object, OSDDataStore):
-            self._insert_data_store_object(fluidfs_object)
-        else:
-            self._logger.error("Insert Failed. Bad object type %s" % type(fluidfs_object))
-            raise Exception
-        self._db_connection.commit()
+    def insert(self, item):
+        return item.insert(self)
 
     def __del__(self):
         self._logger.info("Closing DB connection...")
