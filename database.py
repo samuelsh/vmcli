@@ -72,7 +72,7 @@ class DataBase:
                 str(err)))
             raise err
 
-    def insert_vms_object(self, virtual_machine):
+    def insert_virtual_machine_object(self, virtual_machine):
         """:type virtual_machine: VirtualMachine"""
         try:
             self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
