@@ -22,7 +22,7 @@ class DataBase:
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
              (
                 id                  INTEGER PRIMARY KEY,
-                name                TEXT,
+                name                TEXT
                 )''' % VM_HOST_FOLDER_TABLE_NAME)
 
         self._cursor.execute('''CREATE TABLE IF NOT EXISTS %s
