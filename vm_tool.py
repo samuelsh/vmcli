@@ -89,6 +89,10 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
     elif args.dump2db:
         if db is None:
             raise RuntimeError("DB isn't initialised")
+        logger.info("Scanning VM folders. Can take some time....")
+        for folder in VmUtils.get_all_folders(si):
+            vm_folders.append(VmHostFolder(folder, si))
+        logger.info("Dumping to DB...")
         for folder in vm_folders:
             folder.insert(db)
             for cmp_resource in folder.compute_resources:
@@ -96,8 +100,6 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
                 for vm in cmp_resource.virtual_machines:
                     vm.insert(db)
         logger.info("Done dumping to DB")
-
-
 
 
 def main():
@@ -127,10 +129,6 @@ def main():
         return -1
 
     atexit.register(Disconnect, si)
-
-    logger.info("Scanning VM folders. Can take some time....")
-    for folder in VmUtils.get_all_folders(si):
-        vm_folders.append(VmHostFolder(folder, si))
 
     do_vm_action(logger, args, vm_folders, si, data_base)
 
