@@ -59,7 +59,7 @@ def get_args():
 def do_vm_action(logger, args, vm_folders, si, db=None):
     """
     :param logger
-    :type logger: Logger
+    :type logger: logging
     :param args:
     :param vm_folders:
     :type vm_folders: VmHostFolder[]
@@ -132,7 +132,7 @@ def main():
     for folder in VmUtils.get_all_folders(si):
         vm_folders.append(VmHostFolder(folder, si))
 
-    do_vm_action(args, vm_folders, si, data_base)
+    do_vm_action(logger, args, vm_folders, si, data_base)
 
     return 0
 
