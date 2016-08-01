@@ -56,7 +56,7 @@ class DataBase:
                                  ('NULL', host_folder.name,))
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
-                VM_HOST_FOLDER_TABLE_NAME, (host_folder.id, host_folder),
+                VM_HOST_FOLDER_TABLE_NAME, (host_folder.name,),
                 str(err)))
             raise err
 
