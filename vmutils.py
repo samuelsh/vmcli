@@ -100,12 +100,8 @@ class VmUtils(object):
             if hasattr(child, 'vmFolder'):
                 datacenter = child
                 vm_folders = datacenter.hostFolder
-                if not vm_folders:
-                    return None
                 for folder in vm_folders.childEntity:
                     flist.append(folder.name)
-            else:
-                return None
         return flist
 
     @staticmethod
