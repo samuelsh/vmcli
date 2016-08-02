@@ -22,7 +22,7 @@ class ComputeResource(object):
         return self._name
 
     @property
-    def parent(self):
+    def folder_name(self):
         return self._folder_name
 
     @property
