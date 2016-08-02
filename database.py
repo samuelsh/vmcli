@@ -77,7 +77,7 @@ class DataBase:
         try:
             self._cursor.execute('insert into %s values (?,?,?,?,?,?,?,?,?,?,?)' % VMS_TABLE_NAME,
                                  (
-                                     None, virtual_machine.foder_name, virtual_machine.cmp_res_name,
+                                     None, virtual_machine.folder_name, virtual_machine.cmp_res_name,
                                      virtual_machine.name,
                                      virtual_machine.path, virtual_machine.guest,
                                      virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
