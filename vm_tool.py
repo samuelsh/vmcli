@@ -93,9 +93,11 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
         if db is None:
             raise RuntimeError("DB isn't initialised")
         logger.info("Scanning VM folders. Can take some time....")
-        for folder in VmUtils.get_all_folders(si):
+        folders = VmUtils.get_all_folders(si)
+        logger.debug("Found folders: {}".format(vm_folders))
+        for folder in folders:
             vm_folders.append(VmHostFolder(folder, si))
-        logger.debug("Found folders: {}".format(len(vm_folders)))
+        logger.debug("Added folders objects: {}".format(len(vm_folders)))
         logger.info("Dumping to DB...")
         for folder in vm_folders:
             folder.insert(db)
