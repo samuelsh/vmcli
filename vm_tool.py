@@ -23,7 +23,9 @@ from __future__ import print_function
 import argparse
 import atexit
 import getpass
+import traceback
 
+import sys
 from pyVim.connect import SmartConnect, Disconnect
 
 from database import DataBase
@@ -145,4 +147,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(e)
+        traceback.print_exc()
+        sys.exit(1)
