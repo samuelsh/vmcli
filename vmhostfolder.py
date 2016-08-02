@@ -13,12 +13,16 @@ class VmHostFolder(object):
         :param db:
         :type db: DataBase
         """
-        self.name = name
+        self._name = name
         self._si = si
         self._compute_resources = []
 
         for res in VmUtils.get_compute_resources_by_folder(self.name, self._si):
             self._compute_resources.append(ComputeResource(self.name, res, self._si))
+
+    @property
+    def name(self):
+        return self._name
 
     @property
     def compute_resources(self):

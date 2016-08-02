@@ -93,13 +93,17 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
         logger.info("Scanning VM folders. Can take some time....")
         for folder in VmUtils.get_all_folders(si):
             vm_folders.append(VmHostFolder(folder, si))
+        logger.debug("Found folders: {}".format(len(vm_folders)))
         logger.info("Dumping to DB...")
         for folder in vm_folders:
             folder.insert(db)
+            logger.debug("Folder {0} inserted to DB".format(folder.name))
             for cmp_resource in folder.compute_resources:
                 cmp_resource.insert(db)
+                logger.debug("Computer Resource {0} inserted to DB".format(cmp_resource.name))
                 for vm in cmp_resource.virtual_machines:
                     vm.insert(db)
+                    logger.debug("VM {0} inserted to DB".format(vm.name))
         logger.info("Done dumping to DB")
 
 
