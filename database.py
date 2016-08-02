@@ -54,6 +54,7 @@ class DataBase:
         try:
             self._cursor.execute('insert into %s values (?,?)' % VM_HOST_FOLDER_TABLE_NAME,
                                  (None, host_folder.name,))
+            self._db_connection.commit()
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VM_HOST_FOLDER_TABLE_NAME, (host_folder.name,),
@@ -70,6 +71,7 @@ class DataBase:
                 VM_COMPUTE_RESOURCE_TABLE_NAME,
                 (compute_resource.name, compute_resource.folder_name),
                 str(err)))
+            self._db_connection.commit()
             raise err
 
     def insert_virtual_machine_object(self, virtual_machine):
@@ -82,6 +84,7 @@ class DataBase:
                                      virtual_machine.path, virtual_machine.guest,
                                      virtual_machine.UUID, virtual_machine.num_of_cpus, virtual_machine.ram,
                                      virtual_machine.state, virtual_machine.ip,))
+            self._db_connection.commit()
         except Exception as err:
             self._logger.exception('Table %s, Insert Query Failed: %s\n Error: %s' % (
                 VMS_TABLE_NAME,
@@ -92,8 +95,8 @@ class DataBase:
                 str(err)))
             raise err
 
-    def insert(self, item):
-        return item.insert(self)
+    # def insert(self, item):
+    #     return item.insert(self)
 
     def __del__(self):
         self._logger.info("Closing DB connection...")
