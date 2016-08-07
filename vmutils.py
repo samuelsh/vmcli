@@ -148,7 +148,7 @@ class VmUtils(object):
                 datacenter = child
                 vm_folders = datacenter.hostFolder
                 for folder in vm_folders.childEntity:
-                    print("{0}".format(folder.name))
+                    print("{0} -- {1}".format(type(folder), folder.name))
                     if folder.name == args.fname:
                         resources = folder.childEntity
                         for res in resources:
