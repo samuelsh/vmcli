@@ -111,10 +111,10 @@ class VmUtils(object):
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
                     try:
-                        for folder in vm_folders.childEntity:
+                        #for folder in vm_folders.childEntity:
                             # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                             #     print("{0} {1}".format('-' * level, folder.name))
-                            VmUtils.print_folder(folder, level)
+                            VmUtils.print_folder(vm_folders.childEntity, level)
                     except AttributeError:
                         pass
 
