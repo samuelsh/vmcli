@@ -96,9 +96,8 @@ class VmUtils(object):
                 if args.view == "vms":
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
-                    level = 0
+                    level = 1
                     for folder in vm_folders.childEntity:
-                        level += 1
                         print("{0} {1} Status: {2}".format('-' * level, folder.name, folder.configStatus))
 
     @staticmethod
