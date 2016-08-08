@@ -97,7 +97,7 @@ class VmUtils(object):
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
                     for folder in vm_folders.childEntity:
-                        print("%s %s" % (folder.name, folder.configStatus))
+                        print("{0} {1}".format(folder.name, folder.configStatus).ljust(2, '-'))
 
     @staticmethod
     def get_all_folders(si):
@@ -143,7 +143,8 @@ class VmUtils(object):
                                     summary = vm.summary
                                     vms_list.append(
                                         (summary.config.name, summary.config.vmPathName, summary.config.guestFullName,
-                                         summary.config.instanceUuid, summary.config.numCpu, summary.config.memorySizeMB,
+                                         summary.config.instanceUuid, summary.config.numCpu,
+                                         summary.config.memorySizeMB,
                                          summary.runtime.powerState, summary.guest.ipAddress))
         return vms_list
 
