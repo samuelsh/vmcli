@@ -94,7 +94,7 @@ class VmUtils(object):
                     vm_folders = datacenter.hostFolder
                     try:
                         for folder in vm_folders.childEntity:
-                            if not hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                            if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                                 print("{0} {1}".format('-' * level, folder.name))
                     except AttributeError:
                         pass
@@ -103,7 +103,7 @@ class VmUtils(object):
                     vm_folders = datacenter.vmFolder
                     try:
                         for folder in vm_folders.childEntity:
-                            if not hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                            if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                                 print("{0} {1}".format('-' * level, folder.name))
                     except AttributeError:
                         pass
