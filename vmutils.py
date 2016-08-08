@@ -146,15 +146,21 @@ class VmUtils(object):
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):  # is object a datacenter ?
                 datacenter = child
-                vm_folders = datacenter.hostFolder
-                for folder in vm_folders.childEntity:
-                    print("{0} -- {1}".format(type(folder), folder.name))
-                    if folder.name == args.fname:
-                        resources = folder.childEntity
-                        for res in resources:
-                            print("Compute Resource: %s" % res.name)
-                            for vm in res.resourcePool.vm:
-                                vm_helper.print_vm_info(vm)
+                if args.view == "hosts":
+                    vm_folders = datacenter.hostFolder
+                    for folder in vm_folders.childEntity:
+                        print("{0} -- {1}".format(type(folder), folder.name))
+                        if folder.name == args.fname:
+                            resources = folder.childEntity
+                            for res in resources:
+                                print("Compute Resource: %s" % res.name)
+                                for vm in res.resourcePool.vm:
+                                    vm_helper.print_vm_info(vm)
+                if args.view == "vms":
+                    vm_folders = datacenter.vmFolder
+                    for folder in vm_folders.childEntity:
+                        print("{0} -- {1}".format(type(folder), folder.name))
+
             else:
                 print("Folder %s not found" % args.fname)
 

@@ -49,10 +49,12 @@ def get_args():
                         help='User name to use when connecting to host')
     parser.add_argument('-p', '--password', required=False, action='store',
                         help='Password to use when connecting to host')
+    parser.add_argument('-v', '--view', choices=['vms', 'hosts'],
+                        help="Preferred view: VMs and Templates/Hosts and Clusters", requried=True)
     parser.add_argument('--action',
                         choices=['list', 'poweron', 'poweroff', 'reboot', 'info', 'folder', 'listfolders', 'byfolder'])
     parser.add_argument('-n', '--vmname', type=str, help="")
-    parser.add_argument('-f', '--fname', type=str, help="")
+    parser.add_argument('-f', '--fname', help="Folder Name", type=str)
     parser.add_argument('--dump2db', action='store_true')
     args = parser.parse_args()
     return args
