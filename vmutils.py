@@ -94,7 +94,7 @@ class VmUtils(object):
                     vm_folders = datacenter.hostFolder
                     try:
                         for folder in vm_folders.childEntity:
-                            print("{0} {1} Type: {2}".format('-' * level, folder.name, folder.configStatus))
+                            print("{0} {1}".format('-' * level, folder.name))
                     except AttributeError:
                         pass
                 if args.view == "vms":
@@ -102,7 +102,7 @@ class VmUtils(object):
                     vm_folders = datacenter.vmFolder
                     try:
                         for folder in vm_folders.childEntity:
-                            print("{0} {1} Type: {2}".format('-' * level, folder.name, folder.configStatus))
+                            print("{0} {1}".format('-' * level, folder.name))
                     except AttributeError:
                         pass
 
