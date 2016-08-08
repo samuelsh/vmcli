@@ -102,13 +102,10 @@ class VmUtils(object):
                 if args.view == "hosts":
                     print('Hosts & Cluster')
                     vm_folders = datacenter.hostFolder
-                    try:
-                        for folder in vm_folders.childEntity:
-                            # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
-                            #     print("{0} {1}".format('-' * level, folder.name))
-                            VmUtils.print_folder(folder, level)
-                    except AttributeError:
-                        pass
+                    for folder in vm_folders.childEntity:
+                        # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                        #     print("{0} {1}".format('-' * level, folder.name))
+                        VmUtils.print_folder(folder, level)
                 if args.view == "vms":
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
