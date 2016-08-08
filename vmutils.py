@@ -96,10 +96,10 @@ class VmUtils(object):
                 if args.view == "vms":
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
+                    level = 0
                     for folder in vm_folders.childEntity:
-                        outp = "{0} {1}".format(folder.name, folder.configStatus)
-                        outp.ljust(2, '-')
-                        print(outp)
+                        level += 1
+                        print("{0} {1} Status: {2}".format('-' * level, folder.name, folder.configStatus))
 
     @staticmethod
     def get_all_folders(si):
