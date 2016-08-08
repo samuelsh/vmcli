@@ -83,10 +83,13 @@ class VmUtils(object):
 
     @staticmethod
     def print_folder(folder, level=0):
-        if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+        try:
             print("{0} {1}".format('-' * level, folder.name))
-            if folder.childEntity:
-                VmUtils.print_folder(folder.childEntity[0], level + 1)
+        except AttributeError:
+            pass
+        if folder.childEntity:
+            VmUtils.print_folder(folder.childEntity[0], level + 1)
+
 
     @staticmethod
     def print_all_folders(args, si):
