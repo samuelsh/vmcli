@@ -84,10 +84,11 @@ class VmUtils(object):
     @staticmethod
     def print_folder(folder, level=0):
         try:
-            if not hasattr(folder, 'capability'):  # checking if entity isn't a VM
-                print("{0} {1}".format('-' * level, folder.name))
-            if folder.childEntity:
-                VmUtils.print_folder(folder.childEntity[0], level + 1)  # go deeper it's a folder
+            for f in folder.childEntity:
+                if not hasattr(f, 'capability'):  # checking if entity isn't a VM
+                    print("{0} {1}".format('-' * level, folder.name))
+                if folder.childEntity:
+                    VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
             pass
 
