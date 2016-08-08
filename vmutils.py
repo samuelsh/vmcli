@@ -114,7 +114,7 @@ class VmUtils(object):
                         #for folder in vm_folders.childEntity:
                             # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                             #     print("{0} {1}".format('-' * level, folder.name))
-                            VmUtils.print_folder(vm_folders.childEntity, level)
+                            VmUtils.print_folder(vm_folders, level)
                     except AttributeError:
                         pass
 
