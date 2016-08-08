@@ -82,6 +82,13 @@ class VmUtils(object):
         print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
+    def print_folder(folder, level=0):
+        if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+            print("{0} {1}".format('-' * level, folder.name))
+            VmUtils.print_folder(folder.childEntity[0], level + 1)
+
+
+    @staticmethod
     def print_all_folders(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
@@ -103,8 +110,9 @@ class VmUtils(object):
                     vm_folders = datacenter.vmFolder
                     try:
                         for folder in vm_folders.childEntity:
-                            if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
-                                print("{0} {1}".format('-' * level, folder.name))
+                            # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                            #     print("{0} {1}".format('-' * level, folder.name))
+                            VmUtils.print_folder(folder, level)
                     except AttributeError:
                         pass
 
