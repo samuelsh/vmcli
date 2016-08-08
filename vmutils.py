@@ -82,15 +82,22 @@ class VmUtils(object):
         print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
-    def print_all_folders(si):
+    def print_all_folders(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
             if hasattr(child, 'vmFolder'):
                 print("---------------- DataCenter: %s ------------------" % child.name)
                 datacenter = child
-                vm_folders = datacenter.hostFolder
-                for folder in vm_folders.childEntity:
-                    print("%s %s" % (folder.name, folder.configStatus))
+                if args.view == "hosts":
+                    print('Hosts & Cluster')
+                    vm_folders = datacenter.hostFolder
+                    for folder in vm_folders.childEntity:
+                        print("%s %s" % (folder.name, folder.configStatus))
+                if args.view == "vms":
+                    print('Vms & Templates')
+                    vm_folders = datacenter.vmFolder
+                    for folder in vm_folders.childEntity:
+                        print("%s %s" % (folder.name, folder.configStatus))
 
     @staticmethod
     def get_all_folders(si):

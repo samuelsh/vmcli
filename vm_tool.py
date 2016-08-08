@@ -85,7 +85,7 @@ def do_vm_action(logger, args, vm_folders, si, db=None):
     elif args.action == "folder":
         VmUtils.print_vm_folder(args, si)
     elif args.action == "listfolders":
-        VmUtils.print_all_folders(si)
+        VmUtils.print_all_folders(args, si)
     elif args.action == "byfolder":
         if not args.fname:
             raise RuntimeError("VM folder not specified")
