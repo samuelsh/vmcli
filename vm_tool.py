@@ -50,7 +50,7 @@ def get_args():
     parser.add_argument('-p', '--password', required=False, action='store',
                         help='Password to use when connecting to host')
     parser.add_argument('-v', '--view', choices=['vms', 'hosts'],
-                        help="Preferred view: VMs and Templates/Hosts and Clusters", requried=True)
+                        help="Preferred view: VMs and Templates/Hosts and Clusters", required=True)
     parser.add_argument('--action',
                         choices=['list', 'poweron', 'poweroff', 'reboot', 'info', 'folder', 'listfolders', 'byfolder'])
     parser.add_argument('-n', '--vmname', type=str, help="")
