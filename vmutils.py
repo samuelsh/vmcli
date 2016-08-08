@@ -85,10 +85,9 @@ class VmUtils(object):
     def print_folder(folder, level=0):
         try:
             print("{0} {1}".format('-' * level, folder.name))
+            VmUtils.print_folder(folder.childEntity[0], level + 1)
         except AttributeError:
             pass
-        if folder.childEntity:
-            VmUtils.print_folder(folder.childEntity[0], level + 1)
 
 
     @staticmethod
