@@ -93,7 +93,11 @@ class VmUtils(object):
     @staticmethod
     def print_folder(folder, level=0):
         try:
-            for i, f in enumerate(folder.childEntity):
+            child_folders = []
+            for f in folder.childEntity:
+                if not hasattr(f, 'capability'):  # checking if entity isn't a VM
+                    child_folders.append(f)
+            for i, f in enumerate(child_folders):
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
                     if i >= len(folder.childEntity) - 1:
                         tree_start_char = TREE_LEAF_END
