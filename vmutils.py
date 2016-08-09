@@ -102,7 +102,7 @@ class VmUtils(object):
                     print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
                                                               len(folder.childEntity) - 1))
                 elif f.childEntity:
-                    tree_start_char = TREE_LEAF
+                    tree_start_char = TREE_LEAF_END
                     print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
                                                               len(folder.childEntity) - 1))
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
