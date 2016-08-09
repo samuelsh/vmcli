@@ -107,7 +107,8 @@ class VmUtils(object):
                                                               len(child_folders) - 1))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
-        except AttributeError:
+        except AttributeError as att_err:
+            print(att_err)
             pass
 
     @staticmethod
