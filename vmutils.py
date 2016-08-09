@@ -8,6 +8,7 @@ import time
 
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
+from __builtin__ import input
 
 TREE_LEAF = "\xe2\x94\x9c"
 TREE_LEAF_END = "\xe2\x94\x94"
@@ -51,7 +52,7 @@ def answer_vm_question(virtual_machine):
         if default_option is not None:
             print("default (%s): %s\n" % (default_option.label,
                                           default_option.key))
-        choice = raw_input("\nchoice number: ").strip()
+        choice = input("\nchoice number: ").strip()
         print("...")
     return choice
 
