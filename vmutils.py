@@ -94,7 +94,7 @@ class VmUtils(object):
     def print_folder(folder, level=0):
         try:
             child_folders = []
-            for f in folder.childEntity:
+            for f in folder:
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
                     child_folders.append(f)
             for i, f in enumerate(child_folders):
