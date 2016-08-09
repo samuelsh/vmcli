@@ -90,7 +90,7 @@ class VmUtils(object):
         try:
             for f in folder.childEntity:
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    print("{0}{1} {2}".format(TREE_LEAF, TREE_LEVEL * level, f.name))
+                    print("{0}{1}{2} {3}".format(' ' * level, TREE_LEAF, TREE_LEVEL, f.name))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
