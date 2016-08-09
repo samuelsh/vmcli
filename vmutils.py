@@ -101,7 +101,7 @@ class VmUtils(object):
                         tree_start_char = TREE_LEAF
                     print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
                                                               len(folder.childEntity) - 1))
-                elif not hasattr(f, 'capability') and f.childEntity:
+                if not hasattr(f, 'capability') and f.childEntity:
                     tree_start_char = TREE_LEAF_END
                     print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
                                                               len(folder.childEntity) - 1))
