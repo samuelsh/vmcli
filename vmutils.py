@@ -11,6 +11,7 @@ from pyVmomi import vim
 
 TREE_LEAF = "\xe2\x94\x9c"
 TREE_LEAF_END = "\xe2\x94\x94"
+TREE_LEVEL = "\xE2\x94\x80"
 
 
 def _create_char_spinner():
@@ -89,7 +90,7 @@ class VmUtils(object):
         try:
             for f in folder.childEntity:
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    print("{0} {1} {2}".format(TREE_LEAF, '-' * level, f.name))
+                    print("{0} {1} {2}".format(TREE_LEAF, TREE_LEVEL * level, f.name))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
