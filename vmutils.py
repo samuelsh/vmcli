@@ -95,11 +95,11 @@ class VmUtils(object):
         try:
             for i, f in enumerate(folder.childEntity):
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    if (i - 1) >= len(folder.childEntity) - 1:
+                    if i >= len(folder.childEntity) - 1:
                         tree_start_char = TREE_LEAF_END
                     else:
                         tree_start_char = TREE_LEAF
-                    print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i - 1,
+                    print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
                                                               len(folder.childEntity) - 1))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
