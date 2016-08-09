@@ -9,8 +9,8 @@ import time
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
 
-TREE_LEAF = "\xe2\x94\x94"
-TREE_LEAF_END = "\xe2\x94\x9c"
+TREE_LEAF = "\xe2\x94\x9c"
+TREE_LEAF_END = "\xe2\x94\x94"
 
 
 def _create_char_spinner():
