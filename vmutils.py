@@ -8,7 +8,10 @@ import time
 
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
-from __builtin__ import input
+try:
+    from __builtin__ import input  # for Python 3 compatibility
+except ImportError:
+    from builtins import input
 
 TREE_LEAF = "\xe2\x94\x9c"
 TREE_LEAF_END = "\xe2\x94\x94"
@@ -89,9 +92,13 @@ class VmUtils(object):
     @staticmethod
     def print_folder(folder, level=0):
         try:
-            for f in folder.childEntity:
+            for i, f in enumerate(folder.childEntity):
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    print("{0}{1}{2} {3}".format(' ' * level, TREE_LEAF, TREE_LEVEL, f.name))
+                    if i >= len(folder.childEntity):
+                        tree_start_char = TREE_LEAF_END
+                    else:
+                        tree_start_char = TREE_LEAF
+                    print("{0}{1}{2} {3}".format(' ' * level, tree_start_char, TREE_LEVEL, f.name))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
