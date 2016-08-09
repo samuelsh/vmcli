@@ -8,6 +8,7 @@ import time
 
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
+
 try:
     from __builtin__ import input  # for Python 3 compatibility
 except ImportError:
@@ -98,7 +99,8 @@ class VmUtils(object):
                         tree_start_char = TREE_LEAF_END
                     else:
                         tree_start_char = TREE_LEAF
-                    print("{0}{1}{2} {3}".format(' ' * level, tree_start_char, TREE_LEVEL, f.name))
+                    print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i - 1,
+                                                              len(folder.childEntity) - 1))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
