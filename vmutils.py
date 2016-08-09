@@ -9,6 +9,9 @@ import time
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
 
+TREE_LEAF = "\xe2\x94\x94"
+TREE_LEAF_END = "\xe2\x94\x9c"
+
 
 def _create_char_spinner():
     """Creates a generator yielding a char based spinner.
@@ -86,7 +89,7 @@ class VmUtils(object):
         try:
             for f in folder.childEntity:
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    print("{0} {1}".format('-' * level, f.name))
+                    print("{0} {1} {2}".format(TREE_LEAF, '-' * level, f.name))
                 if f.childEntity:
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError:
@@ -111,10 +114,10 @@ class VmUtils(object):
                     print('Vms & Templates')
                     vm_folders = datacenter.vmFolder
                     try:
-                        #for folder in vm_folders.childEntity:
-                            # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
-                            #     print("{0} {1}".format('-' * level, folder.name))
-                            VmUtils.print_folder(vm_folders, level)
+                        # for folder in vm_folders.childEntity:
+                        # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                        #     print("{0} {1}".format('-' * level, folder.name))
+                        VmUtils.print_folder(vm_folders, level)
                     except AttributeError:
                         pass
 
