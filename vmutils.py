@@ -94,7 +94,7 @@ class VmUtils(object):
         try:
             for i, f in enumerate(folder.childEntity):
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
-                    if (i - 1) >= len(folder.childEntity):
+                    if (i - 1) >= len(folder.childEntity) - 1:
                         tree_start_char = TREE_LEAF_END
                     else:
                         tree_start_char = TREE_LEAF
