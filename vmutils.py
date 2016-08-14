@@ -17,6 +17,7 @@ except ImportError:
 TREE_LEAF = "\xe2\x94\x9c"
 TREE_LEAF_END = "\xe2\x94\x94"
 TREE_LEVEL = "\xE2\x94\x80"
+TREE_PIPE = "\xe2\x94\x82"
 
 
 def _create_char_spinner():
@@ -101,8 +102,27 @@ class VmUtils(object):
                     tree_start_char = TREE_LEAF_END
                 else:
                     tree_start_char = TREE_LEAF
+                print("{0}{1}{2}{3} {4} ({5} of {6})".format(TREE_PIPE, ' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
+                                                          len(child_folders)))
+                if hasattr(f, 'childEntity'):
+                    VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
+        except AttributeError as att_err:
+            print(att_err)
+            pass
+
+    @staticmethod
+    def print_recursive_tree(folder, level=0, folders_only=False):
+        try:
+            child_folders = folder.childEntity
+            if folders_only:
+                child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
+            for i, f in enumerate(child_folders):
+                if i >= len(child_folders) - 1:
+                    tree_start_char = TREE_LEAF_END
+                else:
+                    tree_start_char = TREE_LEAF
                 print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
-                                                              len(child_folders) - 1))
+                                                          len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError as att_err:
@@ -153,10 +173,7 @@ class VmUtils(object):
                     print("{0}".format(child.name))
                     vm_folders = datacenter.vmFolder
                     try:
-                        # for folder in vm_folders.childEntity:
-                        # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
-                        #     print("{0} {1}".format('-' * level, folder.name))
-                        VmUtils.print_folder(vm_folders, level, args.folders_only)
+                        VmUtils.print_recursive_tree(vm_folders, level, args.folders_only)
                     except AttributeError:
                         pass
 
