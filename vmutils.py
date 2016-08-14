@@ -276,6 +276,7 @@ class VmUtils(object):
             for i, f in enumerate(child_folders):
                 if i >= len(child_folders) - 1:
                     tree_entry = TREE_ENTRY_END
+                    tree_padding = TREE_PADDING_EMPTY
                 else:
                     tree_entry = TREE_ENTRY
                 print("{0}{1} {2} ({3} of {4})".format(tree_padding * level, tree_entry, f.name, i + 1,
