@@ -1,6 +1,7 @@
 """
 
 """
+import socket
 import sys
 import textwrap
 
@@ -73,7 +74,8 @@ class VmUtils(object):
 
     @staticmethod
     def print_vm_info(args, si):
-        vm = si.content.searchIndex.FindByDnsName(None, args.vmname, True)
+
+        vm = si.content.searchIndex.FindByIp(None, get_ip_by_host(args.vmname), True)
         if vm is None:
             raise RuntimeError('VM %s not found' % args.vmname)
         vm_helper.print_vm_info(vm)
@@ -276,7 +278,6 @@ class VmUtils(object):
             for i, f in enumerate(child_folders):
                 if i >= len(child_folders) - 1:
                     tree_entry = TREE_ENTRY_END
-                    tree_padding = TREE_PADDING_EMPTY
                 else:
                     tree_entry = TREE_ENTRY
                 print("{0}{1} {2} ({3} of {4})".format(tree_padding * level, tree_entry, f.name, i + 1,
@@ -362,3 +363,19 @@ class VmUtils(object):
                     print(fault_msg.message)
                 return 1
         return 0
+
+
+def get_ip_by_host(hostname):
+    """
+    :type hostname: str
+    :rtype: str
+    """
+    return socket.gethostbyname(hostname)
+
+
+def get_host_by_ip(ip):
+    """
+    :type ip: str
+    :rtype: str
+    """
+    return socket.gethostbyname(ip)
