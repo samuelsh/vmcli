@@ -157,7 +157,7 @@ class VmUtils(object):
                     print("{0}".format(child.name))
                     vm_folders = datacenter.vmFolder
                     try:
-                        print_recursive_tree(vm_folders, level, args.folders_only)
+                        VmUtils.print_recursive_tree(vm_folders, level, args.folders_only)
                     except AttributeError:
                         pass
 
@@ -265,6 +265,25 @@ class VmUtils(object):
         pass
 
     @staticmethod
+    def print_recursive_tree(folder, level=0, folders_only=False):
+        try:
+            child_folders = folder.childEntity
+            if folders_only:
+                child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
+            for i, f in enumerate(child_folders):
+                if i >= len(child_folders) - 1:
+                    tree_entry = TREE_ENTRY_END
+                else:
+                    tree_entry = TREE_ENTRY
+                print("{0}{1}{2} {3} ({4} of {5})".format(TREE_PIPE * level, ' ' * 4, tree_entry, f.name, i,
+                                                          len(child_folders)))
+                if hasattr(f, 'childEntity'):
+                    VmUtils.print_recursive_tree(f, level + 1)  # go deeper it's a folder
+        except AttributeError as att_err:
+            print(att_err)
+            pass
+
+    @staticmethod
     def dump2db(args, si, db):
         pass
 
@@ -340,21 +359,3 @@ class VmUtils(object):
                 return 1
         return 0
 
-
-def print_recursive_tree(folder, level=0, folders_only=False):
-    try:
-        child_folders = folder.childEntity
-        if folders_only:
-            child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
-        for i, f in enumerate(child_folders):
-            if i >= len(child_folders) - 1:
-                tree_entry = TREE_ENTRY_END
-            else:
-                tree_entry = TREE_ENTRY
-            print("{0}{1}{2} {3} ({4} of {5})".format(TREE_PIPE * level, ' ' * 4, tree_entry, f.name, i,
-                                                         len(child_folders)))
-            if hasattr(f, 'childEntity'):
-                VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
-    except AttributeError as att_err:
-        print(att_err)
-        pass
