@@ -41,8 +41,6 @@ def get_args():
 def main():
     """
    """
-    data_base = None
-    vm_folders = []
     args = get_args()
     logger = Logger().logger
     logger.debug("Logger Initialized %s" % logger)
