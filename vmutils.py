@@ -20,6 +20,7 @@ TREE_LEVEL = "\xE2\x94\x80"
 TREE_PIPE = "\xe2\x94\x82"
 
 TREE_ENTRY = TREE_LEAF + TREE_LEVEL + TREE_LEVEL
+TREE_ENTRY_END = TREE_LEAF_END + TREE_LEVEL + TREE_LEVEL
 
 
 def _create_char_spinner():
@@ -101,11 +102,11 @@ class VmUtils(object):
                 child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
             for i, f in enumerate(child_folders):
                 if i >= len(child_folders) - 1:
-                    tree_start_char = TREE_LEAF_END
+                    tree_entry = TREE_ENTRY_END
                 else:
-                    tree_start_char = TREE_LEAF
+                    tree_entry = TREE_ENTRY
                 print(
-                    "{0:>4}{1} {2} ({3} of {4})".format(' ' * level, TREE_ENTRY, f.name, i, len(child_folders)))
+                    "{0:>4}{1} {2} ({3} of {4})".format(' ' * level, tree_entry, f.name, i, len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError as att_err:
