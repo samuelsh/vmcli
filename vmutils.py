@@ -124,7 +124,7 @@ class VmUtils(object):
                     tree_start_char = TREE_LEAF_END
                 else:
                     tree_start_char = TREE_LEAF
-                print("{0}{1}{2} {3} ({4} of {5})".format(' ' * level, tree_start_char, TREE_LEVEL, f.name, i,
+                print("{0}{1}{2} {3} ({4} of {5})".format(' ' * (level + 4), tree_start_char, TREE_LEVEL, f.name, i,
                                                           len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
