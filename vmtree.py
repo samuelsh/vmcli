@@ -60,7 +60,7 @@ def main():
         return -1
 
     atexit.register(Disconnect, si)
-    VmUtils.print_vm_tree(args, si)
+    VmUtils.print_vm_tree_vms(args, si)
 
     return 0
 
