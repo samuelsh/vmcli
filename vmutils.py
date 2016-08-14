@@ -136,6 +136,32 @@ class VmUtils(object):
                         pass
 
     @staticmethod
+    def print_vm_tree(args, si):
+        content = si.RetrieveContent()
+        for child in content.rootFolder.childEntity:
+            if hasattr(child, 'vmFolder'):
+                print("---------------- DataCenter: %s ------------------" % child.name)
+                datacenter = child
+                level = 1
+                if args.view == "hosts":
+                    print('Hosts & Cluster')
+                    vm_folders = datacenter.hostFolder
+                    for folder in vm_folders.childEntity:
+                        # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                        #     print("{0} {1}".format('-' * level, folder.name))
+                        VmUtils.print_folder(folder, level)
+                if args.view == "vms":
+                    print('Vms & Templates')
+                    vm_folders = datacenter.vmFolder
+                    try:
+                        # for folder in vm_folders.childEntity:
+                        # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
+                        #     print("{0} {1}".format('-' * level, folder.name))
+                        VmUtils.print_folder(vm_folders, level)
+                    except AttributeError:
+                        pass
+
+    @staticmethod
     def get_all_folders(si):
         flist = []
         content = si.RetrieveContent()
