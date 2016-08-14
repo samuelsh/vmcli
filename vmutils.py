@@ -158,7 +158,7 @@ class VmUtils(object):
                     print("{0}".format(child.name))
                     vm_folders = datacenter.vmFolder
                     try:
-                        VmUtils.print_recursive_tree(vm_folders, level, args.folders_only)
+                        VmUtils.print_recursive_tree(vm_folders, 0, args.folders_only)
                     except AttributeError:
                         pass
 
