@@ -33,7 +33,7 @@ def get_args():
                         help='Password to use when connecting to host')
     parser.add_argument('-v', '--view', choices=['vms', 'hosts'],
                         help="Preferred view: VMs and Templates/Hosts and Clusters", required=True)
-    parser.add_argument('-d', '--folders_only', help="Print folders only", action="store_true")
+    parser.add_argument('-d', '--folders_only', help="Print folders only", action="store_false")
     args = parser.parse_args()
     return args
 
