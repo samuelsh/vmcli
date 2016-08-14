@@ -106,7 +106,7 @@ class VmUtils(object):
                 else:
                     tree_entry = TREE_ENTRY
                 print(
-                    "{0:>4}{1} {2} ({3} of {4})".format(' ' * level, tree_entry, f.name, i, len(child_folders)))
+                    "{0}{1} {2} ({3} of {4})".format(' ' * level, tree_entry, f.name, i, len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError as att_err:
