@@ -1,3 +1,4 @@
+#!/bin/usr/python
 """
 
 Prints VMWare Datacenter as tree
