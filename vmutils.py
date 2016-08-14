@@ -348,11 +348,10 @@ def print_recursive_tree(folder, level=0, folders_only=False):
             child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
         for i, f in enumerate(child_folders):
             if i >= len(child_folders) - 1:
-                tree_start_char = TREE_LEAF_END
+                tree_entry = TREE_ENTRY_END
             else:
-                tree_start_char = TREE_LEAF
-            print("{0}{1}{2}{3} {4} ({5} of {6})".format(TREE_PIPE * level, ' ' * 4, tree_start_char,
-                                                         TREE_LEVEL, f.name, i,
+                tree_entry = TREE_ENTRY
+            print("{0}{1}{2} {3} ({4} of {5})".format(TREE_PIPE * level, ' ' * 4, tree_entry, f.name, i,
                                                          len(child_folders)))
             if hasattr(f, 'childEntity'):
                 VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
