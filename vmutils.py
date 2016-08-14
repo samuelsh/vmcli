@@ -91,10 +91,11 @@ class VmUtils(object):
         print("Parent Folder: %s" % vm.parent.name)
 
     @staticmethod
-    def print_folder(folder, level=0):
+    def print_folder(folder, level=0, folders_only=False):
         try:
             child_folders = folder.childEntity
-            child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
+            if folders_only:
+                child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
             for i, f in enumerate(child_folders):
                 if not hasattr(f, 'capability'):  # checking if entity isn't a VM
                     if i >= len(child_folders) - 1:
@@ -131,7 +132,7 @@ class VmUtils(object):
                         # for folder in vm_folders.childEntity:
                         # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                         #     print("{0} {1}".format('-' * level, folder.name))
-                        VmUtils.print_folder(vm_folders, level)
+                        VmUtils.print_folder(vm_folders, level, args.folders_only)
                     except AttributeError:
                         pass
 
@@ -156,7 +157,7 @@ class VmUtils(object):
                         # for folder in vm_folders.childEntity:
                         # if hasattr(folder, 'childType'):  # if childType isn't exist, its a VM
                         #     print("{0} {1}".format('-' * level, folder.name))
-                        VmUtils.print_folder(vm_folders, level)
+                        VmUtils.print_folder(vm_folders, level, args.folders_only)
                     except AttributeError:
                         pass
 
