@@ -21,7 +21,8 @@ TREE_PIPE = "\xe2\x94\x82"
 
 TREE_ENTRY = TREE_LEAF + TREE_LEVEL + TREE_LEVEL
 TREE_ENTRY_END = TREE_LEAF_END + TREE_LEVEL + TREE_LEVEL
-TREE_PADDING = TREE_PIPE + "   "
+TREE_PADDING = TREE_PIPE + " " * 3
+TREE_PADDING_EMPTY = " " * 4
 
 
 def _create_char_spinner():
@@ -269,6 +270,7 @@ class VmUtils(object):
     def print_recursive_tree(folder, level=0, folders_only=False):
         try:
             child_folders = folder.childEntity
+            tree_padding = TREE_PADDING
             if folders_only:
                 child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
             for i, f in enumerate(child_folders):
@@ -276,8 +278,8 @@ class VmUtils(object):
                     tree_entry = TREE_ENTRY_END
                 else:
                     tree_entry = TREE_ENTRY
-                print("{0}{1} {2} ({3} of {4})".format(TREE_PADDING * level, tree_entry, f.name, i,
-                                                          len(child_folders)))
+                print("{0}{1} {2} ({3} of {4})".format(tree_padding * level, tree_entry, f.name, i + 1,
+                                                       len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_recursive_tree(f, level + 1, folders_only)  # go deeper it's a folder
         except AttributeError as att_err:
