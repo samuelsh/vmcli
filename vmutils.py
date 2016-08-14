@@ -351,7 +351,7 @@ def print_recursive_tree(folder, level=0, folders_only=False):
                 tree_start_char = TREE_LEAF_END
             else:
                 tree_start_char = TREE_LEAF
-            print("{0}{1}{2}{3} {4} ({5} of {6})".format(TREE_PIPE * (level - 1), ' ' * 4, tree_start_char,
+            print("{0}{1}{2}{3} {4} ({5} of {6})".format(TREE_PIPE * level, ' ' * 4, tree_start_char,
                                                          TREE_LEVEL, f.name, i,
                                                          len(child_folders)))
             if hasattr(f, 'childEntity'):
