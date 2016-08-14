@@ -279,7 +279,7 @@ class VmUtils(object):
                 print("{0}{1} {2} ({3} of {4})".format(TREE_PADDING * level, tree_entry, f.name, i,
                                                           len(child_folders)))
                 if hasattr(f, 'childEntity'):
-                    VmUtils.print_recursive_tree(f, level + 1)  # go deeper it's a folder
+                    VmUtils.print_recursive_tree(f, level + 1, folders_only)  # go deeper it's a folder
         except AttributeError as att_err:
             print(att_err)
             pass
