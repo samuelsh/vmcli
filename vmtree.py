@@ -10,7 +10,7 @@ import getpass
 import traceback
 
 import sys
-from pyvim.connect import SmartConnect, Disconnect
+from pyVim.connect import SmartConnect, Disconnect
 
 from logger import Logger
 from vmutils import VmUtils
