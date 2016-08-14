@@ -275,7 +275,7 @@ class VmUtils(object):
                     tree_entry = TREE_ENTRY_END
                 else:
                     tree_entry = TREE_ENTRY
-                print("{0:>4}{1}{2} {3} ({4} of {5})".format(TREE_PIPE * level, ' ' * 4, tree_entry, f.name, i,
+                print("{0}{1}{2} {3} ({4} of {5})".format(TREE_PIPE * (level + 4), ' ' * 4, tree_entry, f.name, i,
                                                           len(child_folders)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_recursive_tree(f, level + 1)  # go deeper it's a folder
