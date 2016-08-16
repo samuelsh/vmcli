@@ -8,7 +8,7 @@ import socket
 
 
 class VMShell(cmd.Cmd):
-    def __index__(self):
+    def __init__(self):
         self.file = None
         self.hostname = socket.gethostname()
         self.prompt = '{0}@{1}]#'.format('Admin', self.hostname)
