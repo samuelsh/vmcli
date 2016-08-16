@@ -11,8 +11,13 @@ class VMShell(cmd.Cmd):
     def __init__(self):
         self.file = None
         self.hostname = socket.gethostname()
-        self.prompt = '{0}@{1}]#'.format('Admin', self.hostname)
-        cmd.Cmd.prompt = self.prompt
+        self.my_prompt = '{0}@{1}]#'.format('Admin', self.hostname)
+
+    @property
+    def my_prompt(self):
+        return self.prompt
+
+    prompt = my_prompt
 
     def do_bye(self, arg):
         'Stop recording, close the turtle window, and exit:  BYE'
