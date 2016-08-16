@@ -15,7 +15,7 @@ class VMShell(cmd.Cmd):
 
     @property
     def my_prompt(self):
-        return self.prompt
+        return self.my_prompt
 
     prompt = my_prompt
 
