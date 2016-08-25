@@ -7,7 +7,7 @@ import cmd
 import socket
 
 
-class VMShell(cmd.Cmd):
+class VMShell(cmd.Cmd, object):
     def __init__(self):
         super(VMShell, self).__init__()
         self.file = None
