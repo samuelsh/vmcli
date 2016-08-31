@@ -110,12 +110,18 @@ class VmUtils(object):
             if folders_only:
                 child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
             for i, f in enumerate(child_folders):
-                print("{0}{1:>10}".format(f.name, f.configStatus))
+                print("{0}{1:>50}".format(f.name, VmUtils.get_obj_type(f)))
                 if hasattr(f, 'childEntity'):
                     VmUtils.print_folder(f, level + 1)  # go deeper it's a folder
         except AttributeError as att_err:
             print(att_err)
             pass
+
+    @staticmethod
+    def get_obj_type(folder):
+        if not VmUtils.is_folder(folder):
+            return "VM"
+        return "Folder"
 
     @staticmethod
     def is_folder(folder):
