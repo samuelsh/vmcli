@@ -118,7 +118,7 @@ class VmUtils(object):
 
     @staticmethod
     def is_folder(folder):
-        if not hasattr(folder, 'childEntity') or not hasattr(folder, 'vmFolder'):
+        if not hasattr(folder, 'childEntity') and not hasattr(folder, 'vmFolder'):
             return False
         return True
 
