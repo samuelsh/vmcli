@@ -10,7 +10,7 @@ import socket
 import traceback
 
 import sys
-from pyvim.connect import SmartConnect, Disconnect
+from pyVim.connect import SmartConnect, Disconnect
 
 from database import DataBase
 from logger import Logger
