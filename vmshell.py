@@ -23,7 +23,7 @@ class VMShell(cmd.Cmd, object):
 
     prompt = my_prompt
 
-    def do_pwd(self):
+    def do_pwd(self, arg):
         print("{0}".format(self.current_path))
 
     def do_bye(self, arg):
