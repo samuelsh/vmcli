@@ -104,7 +104,7 @@ class VmUtils(object):
         try:
             if hasattr(folder, 'childEntity'):  # This is generic folder
                 child_folders = folder.childEntity
-            elif hasattr(folder, 'vmFolder'):
+            elif hasattr(folder, 'vmFolder'):   # This is Datacenter
                 child_folders = folder.vmFolder.childEntity
             if folders_only:
                 child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
@@ -124,7 +124,11 @@ class VmUtils(object):
 
     @staticmethod
     def get_folder_by_name(start_folder, name):
-        return next((f for f in start_folder.childEntity if f.name == name), None)  # stop on 1st match
+        if hasattr(start_folder, 'childEntity'):  # This is generic folder
+            child_folders = start_folder.childEntity
+        elif hasattr(start_folder, 'vmFolder'):   # This is Datacenter
+            child_folders = start_folder.vmFolder.childEntity
+        return next((f for f in child_folders if f.name == name), None)  # stop on 1st match
 
     @staticmethod
     def print_all_folders(args, si):
