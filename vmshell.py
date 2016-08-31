@@ -30,7 +30,7 @@ class VMShell(cmd.Cmd, object):
     prompt = my_prompt
 
     def _redraw_prompt(self):
-        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, self.current_folder.name)
+        self._my_prompt = '[{0}@{1} {2}({3})]# '.format(self.args.user, self.hostname, self.current_folder.name, type(self.current_folder))
         prompt = self.my_prompt
 
     def do_pwd(self, arg):
