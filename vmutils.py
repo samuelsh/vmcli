@@ -129,7 +129,7 @@ class VmUtils(object):
         if hasattr(start_folder, 'childEntity'):  # This is generic folder
             child_folders = start_folder.childEntity
         elif hasattr(start_folder, 'vmFolder'):   # This is Datacenter
-            if start_folder.name == name:
+            if start_folder.vmFolder.name == name:
                 return start_folder.vmFolder
             return None
         return next((f for f in child_folders if f.name == name and VmUtils.is_folder(f)), None)  # stop on 1st match
