@@ -129,7 +129,7 @@ class VmUtils(object):
             child_folders = start_folder.childEntity
         elif hasattr(start_folder, 'vmFolder'):   # This is Datacenter
             child_folders = start_folder.vmFolder.childEntity
-        return next((f for f in child_folders if f.name == name), None)  # stop on 1st match
+        return next((f for f in child_folders if f.name == name and VmUtils.is_folder(f)), None)  # stop on 1st match
 
     @staticmethod
     def print_all_folders(args, si):

@@ -46,13 +46,19 @@ class VMShell(cmd.Cmd, object):
 
     def do_cd(self, arg):
         new_folder = None
-        try:
-            new_folder = VmUtils.get_folder_by_name(self.current_folder, arg)
-        except AttributeError as att_error:
-            print("{0}".format(att_error))
+        if arg == "..":  # backward navigation
+            new_folder = self.current_folder.parent
+        else:
+            try:
+                new_folder = VmUtils.get_folder_by_name(self.current_folder, arg)
+            except AttributeError as att_error:
+                print("{0}".format(att_error))
         if not new_folder:
-            print("{0}".format("cd: No such file or directory"))
-            return
+            if arg != "..":
+                print("{0}".format("cd: No such file or directory"))
+                return
+            else:
+                return
         self.current_folder = new_folder
         self.current_path.append(new_folder.name)
         self._redraw_prompt()
