@@ -14,10 +14,10 @@ class VMShell(cmd.Cmd, object):
         self.si = si
         self.args = args
         self.file = None
-        self.current_path = ["/"]
+        self.current_path = []
         # self.current_real_path = None
         self.hostname = args.host
-        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, self.current_path)
+        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, "/")
 
         self.content = si.RetrieveContent()
         self.current_folder = self.content.rootFolder
@@ -28,6 +28,14 @@ class VMShell(cmd.Cmd, object):
         return self._my_prompt
 
     prompt = my_prompt
+
+    def _redraw_prompt(self):
+        new_path = ['/']
+        for p in self.current_path:
+            new_path.append('/' + p)
+        new_path.append('/')
+        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, ''.join(self.current_path))
+        prompt = self.my_prompt
 
     def do_pwd(self, arg):
         print("{0}".format("".join(self.current_path)))
@@ -41,8 +49,7 @@ class VMShell(cmd.Cmd, object):
             print("{0}".format("cd: No such file or directory"))
         self.current_folder = new_folder
         self.current_path.append(new_folder.name)
-        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, self.current_path)
-        prompt = self.my_prompt
+        self._redraw_prompt()
 
     def do_bye(self, arg):
         """Stop recording, close the turtle window, and exit:  BYE"""
