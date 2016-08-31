@@ -105,7 +105,7 @@ class VmUtils(object):
             if hasattr(folder, 'childEntity'):  # This is generic folder
                 child_folders = folder.childEntity
             elif hasattr(folder, 'vmFolder'):
-                child_folders = folder.vmFolder
+                child_folders = folder.vmFolder.childEntity
             if folders_only:
                 child_folders = [f for f in child_folders if not hasattr(f, 'capability')]  # removing VMs from list
             for i, f in enumerate(child_folders):
