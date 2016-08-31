@@ -127,8 +127,8 @@ class VmUtils(object):
     def get_vm_power_state(vm):
         try:
             return vm.runtime.powerState
-        except Exception:
-            return None
+        except AttributeError:
+            return ""
 
 
     @staticmethod
