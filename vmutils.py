@@ -7,6 +7,9 @@ import textwrap
 
 import time
 
+from colorama import Fore
+from colorama import init
+
 from tools import tasks, vm as vm_helper
 from pyVmomi import vim
 
@@ -126,10 +129,9 @@ class VmUtils(object):
     @staticmethod
     def get_vm_power_state(vm):
         try:
-            return vm.runtime.powerState
+            return Fore.GREEN + vm.runtime.powerState + Fore.RESET
         except AttributeError:
             return ""
-
 
     @staticmethod
     def is_folder(folder):

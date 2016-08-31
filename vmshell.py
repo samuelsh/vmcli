@@ -5,6 +5,7 @@ samuels (c)
 """
 
 import cmd
+from colorama import init, Fore
 from vmutils import VmUtils
 
 
