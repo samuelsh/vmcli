@@ -31,7 +31,7 @@ class VMShell(cmd.Cmd, object):
 
     def _redraw_prompt(self):
         path_2_display = ['/']
-        for p in self.current_folder:
+        for p in self.current_path:
             path_2_display.append('/' + p)
         path_2_display.append('/')
         self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, ''.join(path_2_display))
