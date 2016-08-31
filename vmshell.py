@@ -59,8 +59,11 @@ class VMShell(cmd.Cmd, object):
                 return
             else:
                 return
+        if arg != "..":
+            self.current_path.append(new_folder.name)
+        else:
+            self.current_path.pop()
         self.current_folder = new_folder
-        self.current_path.append(new_folder.name)
         self._redraw_prompt()
 
     def do_bye(self, arg):
