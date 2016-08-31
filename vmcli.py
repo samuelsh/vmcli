@@ -4,44 +4,15 @@ vCli - cli tool to manage VMWare VMs
 """
 import argparse
 import atexit
-import cmd
 import getpass
-import socket
+import sys
 import traceback
 
-import sys
 from pyVim.connect import SmartConnect, Disconnect
 
 from database import DataBase
 from logger import Logger
-
-
-class VMShell(cmd.Cmd, object):
-    def __init__(self, si, args):
-        super(VMShell, self).__init__()
-        self.si = si
-        self.args = args
-        self.file = None
-        self.current_path = "/"
-        self.hostname = args.host
-        self._my_prompt = '[{0}@{1} {2}]#'.format(args.user, self.hostname, self.current_path)
-
-    @property
-    def my_prompt(self):
-        return self._my_prompt
-
-    prompt = my_prompt
-
-    def do_bye(self, arg):
-        """Stop recording, close the turtle window, and exit:  BYE"""
-        print('Thank you for using  vmcli')
-        self.close()
-        return True
-
-    def close(self):
-        if self.file:
-            self.file.close()
-            self.file = None
+from vmshell import VMShell
 
 
 def get_args():
