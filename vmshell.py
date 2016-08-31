@@ -30,11 +30,11 @@ class VMShell(cmd.Cmd, object):
     prompt = my_prompt
 
     def _redraw_prompt(self):
-        new_path = ['/']
-        for p in self.current_path:
-            new_path.append('/' + p)
-        new_path.append('/')
-        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, ''.join(self.current_path))
+        path_2_display = ['/']
+        for p in self.current_folder:
+            path_2_display.append('/' + p)
+        path_2_display.append('/')
+        self._my_prompt = '[{0}@{1} {2}]# '.format(self.args.user, self.hostname, ''.join(path_2_display))
         prompt = self.my_prompt
 
     def do_pwd(self, arg):
@@ -47,6 +47,7 @@ class VMShell(cmd.Cmd, object):
         new_folder = VmUtils.get_folder_by_name(self.current_folder, arg)
         if not new_folder:
             print("{0}".format("cd: No such file or directory"))
+            return
         self.current_folder = new_folder
         self.current_path.append(new_folder.name)
         self._redraw_prompt()
