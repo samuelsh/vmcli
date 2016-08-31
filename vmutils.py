@@ -124,6 +124,7 @@ class VmUtils(object):
 
     @staticmethod
     def get_folder_by_name(start_folder, name):
+        child_folders = None
         if hasattr(start_folder, 'childEntity'):  # This is generic folder
             child_folders = start_folder.childEntity
         elif hasattr(start_folder, 'vmFolder'):   # This is Datacenter
