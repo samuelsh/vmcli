@@ -113,6 +113,16 @@ class VmUtils(object):
             pass
 
     @staticmethod
+    def is_folder(folder):
+        if not hasattr(folder, 'childEntity'):
+            return False
+        return True
+
+    @staticmethod
+    def get_folder_by_name(start_folder, name):
+        return next((f for f in start_folder.childEntity if f.name == name), None)  # stop on 1st match
+
+    @staticmethod
     def print_all_folders(args, si):
         content = si.RetrieveContent()
         for child in content.rootFolder.childEntity:
