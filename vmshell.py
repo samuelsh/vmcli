@@ -62,7 +62,8 @@ class VMShell(cmd.Cmd, object):
         if arg != "..":
             self.current_path.append(new_folder.name)
         else:
-            self.current_path.pop()
+            if self.current_path:
+                self.current_path.pop()
         self.current_folder = new_folder
         self._redraw_prompt()
 
