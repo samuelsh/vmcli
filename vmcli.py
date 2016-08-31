@@ -22,8 +22,9 @@ class VMShell(cmd.Cmd, object):
         self.si = si
         self.args = args
         self.file = None
+        self.current_path = "/"
         self.hostname = args.host
-        self._my_prompt = '{0}@{1}]#'.format(args.user, self.hostname)
+        self._my_prompt = '[{0}@{1} {2}]#'.format(args.user, self.hostname, self.current_path)
 
     @property
     def my_prompt(self):
