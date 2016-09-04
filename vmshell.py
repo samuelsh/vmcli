@@ -5,7 +5,6 @@ samuels (c)
 """
 
 import cmd
-from colorama import init, Fore
 from vmutils import VmUtils
 
 
@@ -22,7 +21,7 @@ class VMShell(cmd.Cmd, object):
 
         self.content = si.RetrieveContent()
         self.current_folder = self.content.rootFolder
-        # for child in content.rootFolder.childEntity:
+        self.vmutils = VmUtils()  # helper utils class
 
     @property
     def my_prompt(self):
